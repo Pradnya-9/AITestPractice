@@ -1,0 +1,35 @@
+# Maven
+/target/
+**/target/
+!*/src/**/target/**
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# IntelliJ IDEA
+*.iml
+.idea/
+out/ 
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Dependency directories
+node_modules/
+
+# Java
+*.class
+
+# IDE workspace
+*.swp
