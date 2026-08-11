@@ -2,8 +2,8 @@
 
 - **Author:** Pramod Dutta
 - **Role:** Principal SDET
-- **Website:** [The Testing Academy](https://thetestingacademy.com/)
-- **LinkedIn:** [linkedin.com/in/pramoddutta](https://www.linkedin.com/in/pramoddutta/)
+- **Website:** 
+- **LinkedIn:**
 
 ---
 
