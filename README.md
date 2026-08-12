@@ -24,7 +24,6 @@ cd AITesterBlueprint4X
 - AI agent development
 - Model evaluation and testing frameworks
 - Best practices and patterns for AI engineering
-- Prompt engineering and test design templates for QA workflows
 
 ## License
 
