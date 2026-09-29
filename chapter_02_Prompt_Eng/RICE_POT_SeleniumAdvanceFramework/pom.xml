@@ -4,7 +4,7 @@
   <artifactId>rice-pot-selenium-advance</artifactId>
   <version>1.0.0</version>
   <properties>
-    <java.version>17</java.version>
+    <java.version>25</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,13 +18,13 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>7.8.1</version>
+      <version>7.10.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
       <artifactId>webdrivermanager</artifactId>
-      <version>5.5.1</version>
+      <version>6.1.0</version>
     </dependency>
   </dependencies>
   <build>

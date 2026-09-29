@@ -2,6 +2,7 @@ package pageobjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,7 +25,7 @@ public class LoginPage {
     @FindBy(xpath = "//input[@id='rememberUn']")
     private WebElement rememberMeCheckbox;
 
-    @FindBy(xpath = "//div[contains(@id,'error')]")
+    @FindBy(xpath = "//*[@role='alert'] | //*[@aria-live='assertive'] | //div[contains(@id,'error')] | //div[contains(@class,'error')]")
     private WebElement errorMessage;
 
     public LoginPage(WebDriver driver) {
@@ -75,11 +76,20 @@ public class LoginPage {
 
     public void login(String user, String pass, boolean remember) {
         enterUsername(user);
+        if (!isPasswordDisplayed()) {
+            clickLogin();
+            wait.until(ExpectedConditions.visibilityOf(password));
+        }
         enterPassword(pass);
         if (remember) {
             clickRememberMe();
         }
         clickLogin();
+    }
+
+    private boolean isPasswordDisplayed() {
+        return driver.findElements(By.xpath("//input[@id='password']")).stream()
+                .anyMatch(WebElement::isDisplayed);
     }
 
     public boolean isErrorMessageDisplayed() {

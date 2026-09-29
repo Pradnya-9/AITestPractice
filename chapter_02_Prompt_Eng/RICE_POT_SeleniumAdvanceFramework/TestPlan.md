@@ -38,6 +38,7 @@ Validate the Salesforce login page at `https://login.salesforce.com/?locale=in` 
    - Submit the login form and verify the login error message is displayed.
 
 ## Data and Configuration
+- Java runtime: 25 (LTS).
 - Use external system properties for valid credentials:
   - `-Dusername=<valid_username>`
   - `-Dpassword=<valid_password>`

@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -27,7 +28,7 @@ public class ValidLoginTest {
         String username = System.getProperty("username");
         String password = System.getProperty("password");
         if (username == null || password == null) {
-            throw new IllegalArgumentException("username and password system properties are required");
+            throw new SkipException("Set username and password system properties to run the authenticated Salesforce test");
         }
         loginPage.login(username, password, true);
         Assert.assertTrue(loginPage.isLoginSuccessful(), "Login should succeed for valid credentials");

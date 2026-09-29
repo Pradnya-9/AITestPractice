@@ -1,0 +1,169 @@
+Verified Facts:
+
+- Product: VWO login dashboard at app.vwo.com, entry point to VWO's experimentation/personalization/analytics platform.
+- Authentication fields: email address and password.
+- Remember Me checkbox for persistent sessions.
+- Account Registration / free trial signup link present.
+- Product announcement banner for new UI with Light and Dark Mode.
+- Real-time (on-blur) field validation.
+- Email format verification, with specialized mobile keyboards.
+- Password strength indicator (visual feedback).
+- Clear, actionable error messages for failed login.
+- Forgot Password flow with secure token-based reset; multiple recovery options including email-based reset.
+- Enforced password complexity requirements (not specified in detail).
+- Optional Multi-Factor Authentication (2FA).
+- Enterprise SSO support (SAML, OAuth mentioned as protocols).
+- Optional social login: Google, Microsoft, "other identity providers."
+- Session management with configurable timeout.
+- Rate limiting to protect against brute force attacks.
+- HTTPS/SSL/TLS enforced for all login communications; encrypted password storage; encrypted data in transit.
+- Responsive, mobile-optimized design with touch-friendly controls.
+- Auto-focus on first input field.
+- Clickable form labels.
+- Loading state feedback during authentication.
+- ARIA labels, keyboard navigation, high contrast mode (accessibility).
+- Page load target: under 2 seconds on standard connections.
+- High availability target: 99.9% uptime.
+- Support for "thousands of simultaneous" logins (exact concurrency number not given).
+- Login success/failure analytics tracking.
+- Target login success rate: 95%+.
+- WCAG 2.1 AA compliance target.
+- GDPR/CCPA compliance for user data handling.
+- OWASP authentication guideline compliance (referenced, not detailed).
+
+Missing / Unknown Information:
+
+- Exact UI element IDs/selectors, button/link text strings, and exact error message copy.
+- Exact password complexity rules (min length, character requirements).
+- Exact session timeout duration/configuration options.
+- Exact rate-limiting thresholds (e.g., number of attempts before lockout, lockout duration).
+- Exact 2FA methods supported (SMS, authenticator app, email code, etc.).
+- Exact SSO providers/configuration beyond "SAML, OAuth."
+- Exact API endpoints, request/response schemas, or HTTP status/error codes.
+- Exact concurrency number for "thousands of simultaneous login attempts."
+- Exact CDN/region list for "multi-region deployment."
+- Exact "Remember Me" session duration.
+- Exact biometric authentication scope (listed under Future Enhancements, not current scope).
+- Browser/device support matrix (specific browsers/OS versions).
+
+Generated Output:
+
+Per the rule, test cases below are generated only from the Verified Facts above. Where a PRD statement is directional (e.g., "clear error messages") rather than a specific spec, the test case is written to check the presence/behavior described, not a specific value — those are flagged as Inference (low confidence) where applicable.
+
+**1. Core Authentication**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-001 | Valid login | Enter registered email + correct password, submit | User authenticated, redirected to VWO dashboard | Login Process, Dashboard Transition |
+| TC-002 | Invalid password | Enter valid email + wrong password, submit | Login rejected, error message shown | Error Handling |
+| TC-003 | Invalid/unregistered email | Enter unregistered email + any password, submit | Login rejected, error message shown | Error Handling |
+| TC-004 | Empty email field | Leave email blank, submit | Validation error shown, login blocked | Real-time Validation |
+| TC-005 | Empty password field | Leave password blank, submit | Validation error shown, login blocked | Real-time Validation |
+| TC-006 | Malformed email format | Enter text without "@"/domain in email field, blur field | Real-time email format error shown | Email Format Verification |
+| TC-007 | Auto-focus on load | Load login page | First input field (email) is auto-focused | Auto-focus |
+| TC-008 | Clickable labels | Click on "Email" or "Password" label | Focus moves to corresponding input | Clickable Labels |
+| TC-009 | Loading state on submit | Submit valid credentials | Loading indicator shown during authentication processing | Loading States |
+| TC-010 | HTTPS enforcement | Access login page via HTTP | Redirected to HTTPS / connection is TLS-encrypted | HTTPS Enforcement |
+
+**2. Remember Me**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-011 | Remember Me checked | Log in with "Remember Me" checked, close browser, reopen | Session persists, user not prompted to log in again | Remember Me Functionality |
+| TC-012 | Remember Me unchecked | Log in with "Remember Me" unchecked, close browser, reopen | User prompted to log in again | Remember Me Functionality |
+
+**3. Password Strength / Requirements**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-013 | Password strength indicator updates | Type passwords of increasing complexity in a password-set/reset field | Strength indicator visually updates accordingly | Password Strength Indicators |
+| TC-014 | Password below required complexity | Enter a password that fails complexity requirements (exact rule: Insufficient information to determine) | Error indicating requirement not met | Password Requirements — Inference (low confidence) on exact rule |
+
+**4. Forgot Password / Recovery**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-015 | Initiate forgot password | Click "Forgot Password," enter registered email | Reset token/link sent via email | Forgot Password Flow |
+| TC-016 | Reset link validity | Use a valid reset token/link | User able to set new password | Secure Token Generation |
+| TC-017 | Expired/invalid reset token | Use an expired or invalid token (expiry duration: Insufficient information to determine) | Reset rejected with appropriate error | Secure Token Generation — Inference (low confidence) on expiry window |
+| TC-018 | Password recovery via alternate method | Attempt recovery through any additional recovery option beyond email | Insufficient information to determine — PRD states "multiple recovery options" without naming them | Password Recovery |
+
+**5. Multi-Factor Authentication (Optional)**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-019 | 2FA prompt when enabled | Log in with valid credentials on an account with 2FA enabled | User prompted for second factor before dashboard access | Multi-Factor Authentication |
+| TC-020 | Login without 2FA when disabled | Log in with valid credentials on account without 2FA | User goes directly to dashboard | Multi-Factor Authentication (optional) |
+| TC-021 | 2FA method specifics | N/A | Insufficient information to determine — exact 2FA method(s) not specified | — |
+
+**6. SSO / Social Login**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-022 | Enterprise SSO login | Log in via configured SSO (SAML/OAuth) for an organizational account | User authenticated through identity provider, redirected to dashboard | Single Sign-On, SAML/OAuth |
+| TC-023 | Social login (Google) | Log in using Google identity provider option | User authenticated, redirected to dashboard | Social Login |
+| TC-024 | Social login (Microsoft) | Log in using Microsoft identity provider option | User authenticated, redirected to dashboard | Social Login |
+
+**7. Session Management**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-025 | Session timeout | Remain idle until session timeout period elapses (exact duration: Insufficient information to determine) | User logged out / session expires | Session Management — Inference (low confidence) on exact duration |
+| TC-026 | Secure session token | Inspect session token after login | Token is securely generated (format/algorithm: Insufficient information to determine) | Session Security |
+
+**8. Rate Limiting / Brute Force Protection**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-027 | Repeated failed login attempts | Submit incorrect password multiple times in succession (exact threshold: Insufficient information to determine) | Requests throttled / account or IP temporarily restricted | Rate Limiting |
+
+**9. Responsive Design / Mobile**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-028 | Mobile viewport rendering | Load login page on a mobile-width viewport | Layout adapts responsively, touch targets usable | Responsive Design |
+| TC-029 | Mobile keyboard for email field | Focus email field on a mobile device | Email-optimized keyboard (with @ and .com shortcuts) appears | Specialized Mobile Keyboards |
+
+**10. Accessibility**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-030 | Screen reader labels | Navigate form using a screen reader | Fields and buttons announce correctly via ARIA labels | Screen Reader Support |
+| TC-031 | Keyboard-only navigation | Navigate and submit the login form using only keyboard (Tab/Enter) | All interactive elements reachable and operable | Keyboard Navigation |
+| TC-032 | High contrast mode | Enable high contrast mode option | Login page renders in high-contrast styling | High Contrast Mode |
+
+**11. Theming**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-033 | Light mode display | Select/default to Light Mode | Page renders in light theme | Theme Support |
+| TC-034 | Dark mode display | Select Dark Mode | Page renders in dark theme | Theme Support |
+
+**12. Performance**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-035 | Page load time | Load login page on a standard connection, measure load time | Page loads in under 2 seconds | Page Load Speed |
+| TC-036 | Concurrent login load | Simulate multiple simultaneous login attempts (exact count: Insufficient information to determine) | System remains available, handles load without failure | Concurrent Users — Inference (low confidence) on exact concurrency figure |
+
+**13. Registration / New User Path**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-037 | Navigate to signup | Click account registration / free trial link from login page | User directed to registration/signup flow | Account Registration Link |
+
+**14. Analytics**
+
+| ID | Test Case | Steps | Expected Result | Basis |
+|---|---|---|---|---|
+| TC-038 | Login success tracked | Perform a successful login | Success event captured in analytics (exact tracking mechanism: Insufficient information to determine) | Analytics Integration — Inference (low confidence) |
+| TC-039 | Login failure tracked | Perform a failed login | Failure event captured in analytics (exact tracking mechanism: Insufficient information to determine) | Analytics Integration — Inference (low confidence) |
+
+Self-Validation Check:
+
+- Every test case above traces to an explicit PRD statement listed in Verified Facts; none introduce UI elements, error codes, or behaviors not present in the source document.
+- Cases requiring a specific numeric value, exact copy, or exact mechanism not stated in the PRD (session timeout duration, rate-limit threshold, password complexity rule, reset-token expiry, concurrency figure, exact 2FA method, analytics mechanism) are explicitly flagged either as "Insufficient information to determine" or "Inference (low confidence)" rather than assumed.
+- No contradictions detected between test cases and PRD content.
+- Output format follows the mandated structure: Verified Facts, Missing/Unknown Information, Generated Output, Self-Validation Check.
+
+If you want, I can also produce this as a downloadable spreadsheet (.xlsx) formatted for a test management tool — let me know.
