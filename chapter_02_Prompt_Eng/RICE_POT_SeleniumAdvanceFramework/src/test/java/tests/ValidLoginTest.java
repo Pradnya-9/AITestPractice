@@ -1,25 +1,17 @@
 package tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import base.BaseTest;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageobjects.LoginPage;
 
-public class ValidLoginTest {
-    private WebDriver driver;
+public class ValidLoginTest extends BaseTest {
     private LoginPage loginPage;
 
-    @BeforeTest
-    public void setup() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://login.salesforce.com/?locale=in");
+    @BeforeMethod(alwaysRun = true)
+    public void initPage() {
         loginPage = new LoginPage(driver);
     }
 
@@ -32,12 +24,5 @@ public class ValidLoginTest {
         }
         loginPage.login(username, password, true);
         Assert.assertTrue(loginPage.isLoginSuccessful(), "Login should succeed for valid credentials");
-    }
-
-    @AfterTest
-    public void teardown() {
-        if (driver != null) {
-            driver.quit();
-        }
     }
 }
